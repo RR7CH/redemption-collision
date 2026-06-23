@@ -1,0 +1,7 @@
+{
+  "tool_name": "mcp__plugin_playwright_playwright__browser_navigate",
+  "tool_input_preview": "{\"url\":\"https://redemption-collision.vercel.app/contact.html\"}",
+  "error": "### Error\nError: browserBackend.callTool: net::ERR_CONNECTION_RESET at https://redemption-collision.vercel.app/contact.html\nCall log:\n\u001b[2m  - navigating to \"https://redemption-collision.vercel.app/contact.html\", waiting until \"domcontentloaded\"\u001b[22m",
+  "timestamp": "2026-06-22T20:40:35.592Z",
+  "retry_count": 1
+}

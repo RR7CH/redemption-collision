@@ -1,0 +1,233 @@
+{
+  "primitive": {
+    "color": {
+      "brand-blue": {
+        "50": {
+          "$value": "#f5f5f5",
+          "$type": "color"
+        },
+        "100": {
+          "$value": "#f5f5f5",
+          "$type": "color"
+        },
+        "200": {
+          "$value": "#ABDDFF",
+          "$type": "color"
+        },
+        "300": {
+          "$value": "#78AAFF",
+          "$type": "color"
+        },
+        "400": {
+          "$value": "#4577FB",
+          "$type": "color"
+        },
+        "500": {
+          "$value": "#1244c8",
+          "$type": "color"
+        },
+        "600": {
+          "$value": "#050505",
+          "$type": "color"
+        },
+        "700": {
+          "$value": "#00007C",
+          "$type": "color"
+        },
+        "800": {
+          "$value": "#000055",
+          "$type": "color"
+        },
+        "900": {
+          "$value": "#00002F",
+          "$type": "color"
+        }
+      },
+      "dark": {
+        "50": {
+          "$value": "#FFFFFF",
+          "$type": "color"
+        },
+        "100": {
+          "$value": "#FFFFFF",
+          "$type": "color"
+        },
+        "200": {
+          "$value": "#FFFFFF",
+          "$type": "color"
+        },
+        "300": {
+          "$value": "#EEEEEE",
+          "$type": "color"
+        },
+        "400": {
+          "$value": "#BBBBBB",
+          "$type": "color"
+        },
+        "500": {
+          "$value": "#888888",
+          "$type": "color"
+        },
+        "600": {
+          "$value": "#333333",
+          "$type": "color"
+        },
+        "700": {
+          "$value": "#3C3C3C",
+          "$type": "color"
+        },
+        "800": {
+          "$value": "#151515",
+          "$type": "color"
+        },
+        "900": {
+          "$value": "#000000",
+          "$type": "color"
+        }
+      },
+      "gold": {
+        "50": {
+          "$value": "#FFFFFF",
+          "$type": "color"
+        },
+        "100": {
+          "$value": "#FFFFEF",
+          "$type": "color"
+        },
+        "200": {
+          "$value": "#FFFFBC",
+          "$type": "color"
+        },
+        "300": {
+          "$value": "#FFFF89",
+          "$type": "color"
+        },
+        "400": {
+          "$value": "#FFD956",
+          "$type": "color"
+        },
+        "500": {
+          "$value": "#f5a623",
+          "$type": "color"
+        },
+        "600": {
+          "$value": "#CF8000",
+          "$type": "color"
+        },
+        "700": {
+          "$value": "#A95A00",
+          "$type": "color"
+        },
+        "800": {
+          "$value": "#823300",
+          "$type": "color"
+        },
+        "900": {
+          "$value": "#5C0D00",
+          "$type": "color"
+        }
+      }
+    }
+  },
+  "semantic": {
+    "color": {
+      "primary": {
+        "$value": "{primitive.color.brand-blue.500}",
+        "$type": "color"
+      },
+      "primary-hover": {
+        "$value": "{primitive.color.brand-blue.600}",
+        "$type": "color"
+      },
+      "primary-active": {
+        "$value": "{primitive.color.brand-blue.700}",
+        "$type": "color"
+      },
+      "primary-light": {
+        "$value": "{primitive.color.brand-blue.400}",
+        "$type": "color"
+      },
+      "primary-lighter": {
+        "$value": "{primitive.color.brand-blue.100}",
+        "$type": "color"
+      },
+      "primary-dark": {
+        "$value": "{primitive.color.brand-blue.600}",
+        "$type": "color"
+      },
+      "secondary": {
+        "$value": "{primitive.color.dark.500}",
+        "$type": "color"
+      },
+      "secondary-hover": {
+        "$value": "{primitive.color.dark.600}",
+        "$type": "color"
+      },
+      "accent": {
+        "$value": "{primitive.color.gold.500}",
+        "$type": "color"
+      },
+      "accent-hover": {
+        "$value": "{primitive.color.gold.600}",
+        "$type": "color"
+      },
+      "background": {
+        "$value": "#0a0a0a",
+        "$type": "color"
+      },
+      "surface": {
+        "$value": "rgba(8,8,20,0.82)",
+        "$type": "color"
+      },
+      "text-primary": {
+        "$value": "#f5f5f5",
+        "$type": "color"
+      },
+      "text-secondary": {
+        "$value": "#888888",
+        "$type": "color"
+      },
+      "border": {
+        "$value": "rgba(255,255,255,0.1)",
+        "$type": "color"
+      },
+      "secondary-light": {
+        "$value": "{primitive.color.dark.300}",
+        "$type": "color"
+      },
+      "secondary-dark": {
+        "$value": "{primitive.color.dark.600}",
+        "$type": "color"
+      },
+      "accent-light": {
+        "$value": "{primitive.color.gold.300}",
+        "$type": "color"
+      },
+      "success": {
+        "$value": "{primitive.color.gold.500}",
+        "$type": "color"
+      },
+      "success-light": {
+        "$value": "{primitive.color.gold.300}",
+        "$type": "color"
+      },
+      "error": {
+        "$value": "{primitive.color.brand-blue.500}",
+        "$type": "color"
+      },
+      "error-light": {
+        "$value": "{primitive.color.brand-blue.300}",
+        "$type": "color"
+      },
+      "info": {
+        "$value": "{primitive.color.dark.500}",
+        "$type": "color"
+      },
+      "info-light": {
+        "$value": "{primitive.color.dark.300}",
+        "$type": "color"
+      }
+    }
+  },
+  "brand": "ClaudeKit Marketing - Brand Blue"
+}
