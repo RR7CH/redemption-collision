@@ -78,6 +78,8 @@
           <img
             src="images/logo.png"
             alt="Redemption Collision Center Logo"
+            width="80"
+            height="80"
             class="logo-img"
             onerror="this.style.display = 'none'"
           />
@@ -125,7 +127,7 @@
           <div class="hero-eyebrow">Humble, TX · Serving Greater Houston</div>
           <h1>
             Collision Repair. Mechanical.<br /><span class="hero-accent"
-              >One Call Does It All.</span
+              >One Call Does It<span class="mobile-break"><br /></span> All.</span
             >
           </h1>
           <div
@@ -149,7 +151,7 @@
 
         <!-- Right: lead form -->
         <div class="hero-form-card">
-          <h3 class="form-card-title">Get a Free Estimate</h3>
+          <h2 class="form-card-title">Get a Free Estimate</h2>
           <p class="form-card-sub">Quick response · No pressure</p>
           <form
             action="https://formspree.io/f/xrewgngd"
@@ -218,7 +220,7 @@
                       type="file"
                       id="photo-front"
                       name="photo_front"
-                      accept="image/*"
+                      accept="image/png,image/jpeg"
                       capture="environment"
                       class="photo-upload-input"
                     />
@@ -232,7 +234,7 @@
                       type="file"
                       id="photo-rear"
                       name="photo_rear"
-                      accept="image/*"
+                      accept="image/png,image/jpeg"
                       capture="environment"
                       class="photo-upload-input"
                     />
@@ -246,7 +248,7 @@
                       type="file"
                       id="photo-vin"
                       name="photo_vin"
-                      accept="image/*"
+                      accept="image/png,image/jpeg"
                       capture="environment"
                       class="photo-upload-input"
                     />
@@ -260,7 +262,7 @@
                       type="file"
                       id="photo-insurance"
                       name="photo_insurance"
-                      accept="image/*"
+                      accept="image/png,image/jpeg"
                       capture="environment"
                       class="photo-upload-input"
                     />
@@ -1274,7 +1276,7 @@
           </div>
         </div>
         <div class="footer-links">
-          <h4>Services</h4>
+          <h3>Services</h3>
           <nav aria-label="Footer navigation">
             <a href="collision-repair.html">Collision Repair</a>
             <a href="auto-body-paint.html">Auto Body &amp; Paint</a>
@@ -1286,7 +1288,7 @@
           </nav>
         </div>
         <div class="footer-contact">
-          <h4>Contact Us</h4>
+          <h3>Contact Us</h3>
           <address>
             <p>3975 Atascocita Way<br />Humble, TX 77396</p>
             <p><a href="tel:3464715322">(346) 471-5322</a></p>
@@ -1317,14 +1319,82 @@
         const form = document.querySelector(".estimate-form");
         if (!form) return;
         const btn = form.querySelector(".form-submit-btn");
+        const fileSizeLimit = 25 * 1024 * 1024;
+        const totalFileSizeLimit = 100 * 1024 * 1024;
+        const submitWithFormspreeCaptcha = () => {
+          HTMLFormElement.prototype.submit.call(form);
+        };
+        const getSelectedFiles = () => {
+          return Array.from(form.querySelectorAll('input[type="file"]')).flatMap(
+            (input) => Array.from(input.files || [])
+          );
+        };
+        const selectedFileError = () => {
+          const files = getSelectedFiles();
+          const oversized = files.find((file) => file.size > fileSizeLimit);
+          const totalSize = files.reduce((total, file) => total + file.size, 0);
+          if (oversized) {
+            return "Each photo must be 25 MB or smaller.";
+          }
+          if (files.length > 10 || totalSize > totalFileSizeLimit) {
+            return "Upload up to 10 photos, 100 MB total.";
+          }
+          return "";
+        };
+        const readFormspreeError = async (res) => {
+          try {
+            const data = await res.json();
+            if (data.error) return data.error;
+            if (Array.isArray(data.errors)) {
+              return data.errors.map((error) => error.message).join(" ");
+            }
+          } catch (err) {
+            try {
+              return await res.text();
+            } catch (textErr) {
+              return "";
+            }
+          }
+          return "";
+        };
+        const needsHostedCaptcha = (status, message) => {
+          return (
+            (status === 401 || status === 403) &&
+            /captcha|recaptcha|custom key/i.test(message)
+          );
+        };
+        const showFormError = (message) => {
+          btn.disabled = false;
+          btn.innerHTML = "Request Free Estimate →";
+          let errEl = form.querySelector(".form-error");
+          if (!errEl) {
+            errEl = document.createElement("p");
+            errEl.className = "form-error";
+            errEl.setAttribute("role", "alert");
+            btn.insertAdjacentElement("afterend", errEl);
+          }
+          errEl.textContent = message;
+        };
 
         form.addEventListener("submit", async function (e) {
           e.preventDefault();
+
+          const fileError = selectedFileError();
+          if (fileError) {
+            showFormError(fileError);
+            return;
+          }
 
           // Loading state
           btn.disabled = true;
           btn.innerHTML =
             '<span class="btn-spinner" aria-hidden="true"></span> Sending…';
+
+          if (getSelectedFiles().length > 0) {
+            btn.innerHTML = "Opening secure photo upload...";
+            submitWithFormspreeCaptcha();
+            return;
+          }
 
           try {
             const res = await fetch(form.action, {
@@ -1338,28 +1408,39 @@
               form.innerHTML =
                 '<div class="form-success" role="status">' +
                 '<svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#1244c8" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>' +
-                "<h4>We got your request!</h4>" +
+                "<h3>We got your request!</h3>" +
                 '<p>We\'ll call you within 1 business hour.<br>Need it now? <a href="tel:3464715322">(346) 471-5322</a></p>' +
                 "</div>";
             } else {
-              throw new Error("Server error");
+              const message = await readFormspreeError(res);
+              if (needsHostedCaptcha(res.status, message)) {
+                btn.innerHTML = "Opening secure spam check...";
+                submitWithFormspreeCaptcha();
+                return;
+              }
+              throw new Error(message || "Server error");
             }
           } catch (err) {
             // Error state
-            btn.disabled = false;
-            btn.innerHTML = "Request Free Estimate →";
-            const existing = form.querySelector(".form-error");
-            if (!existing) {
-              const errEl = document.createElement("p");
-              errEl.className = "form-error";
-              errEl.setAttribute("role", "alert");
-              errEl.innerHTML =
-                'Something went wrong. Please call us at <a href="tel:3464715322">(346) 471-5322</a>.';
-              btn.insertAdjacentElement("afterend", errEl);
-            }
+            showFormError(
+              "Something went wrong. Please call us at (346) 471-5322."
+            );
           }
         });
       })();
     </script>
-  </body>
+  <!--Start of Tawk.to Script-->
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6a3af0abad14dc1d441d0440/1jrr3o7pu';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+</script>
+<!--End of Tawk.to Script-->
+</body>
 </html>

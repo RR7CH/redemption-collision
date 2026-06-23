@@ -1,0 +1,171 @@
+{
+  "name": "Redemption Collision — Missed Call Text-Back",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "redemption-voice",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-voice-webhook",
+      "name": "1. Incoming Call (Voice URL)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 180],
+      "webhookId": "redemption-voice"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<Response>\n  <Dial timeout=\"20\" action=\"{{$env.N8N_BASE_URL}}/webhook/redemption-status\" method=\"POST\" callerId=\"{{$json.body.To}}\">\n    <Number>+13464715322</Number>\n  </Dial>\n  <Say voice=\"alice\">We missed your call. We will text you right back within a few minutes.</Say>\n  <Hangup/>\n</Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "id": "node-twiml-response",
+      "name": "2. Return TwiML (Dial Real Number)",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [460, 180]
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "redemption-status",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "node-status-webhook",
+      "name": "3. Call Status Callback",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 400],
+      "webhookId": "redemption-status"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": false,
+            "leftValue": "",
+            "typeValidation": "loose"
+          },
+          "conditions": [
+            {
+              "id": "cond-no-answer",
+              "leftValue": "={{ $json.body.DialCallStatus }}",
+              "rightValue": "no-answer",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "cond-busy",
+              "leftValue": "={{ $json.body.DialCallStatus }}",
+              "rightValue": "busy",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "cond-failed",
+              "leftValue": "={{ $json.body.DialCallStatus }}",
+              "rightValue": "failed",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "id": "node-if-missed",
+      "name": "4. Was Call Missed?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [460, 400]
+    },
+    {
+      "parameters": {
+        "from": "REPLACE_WITH_TWILIO_NUMBER",
+        "to": "={{ $('3. Call Status Callback').item.json.body.Caller }}",
+        "message": "Hi! You just called Redemption Collision Center and we missed you. Text us back here or call (346) 471-5322. We're open Mon–Fri 9am–5pm and will get right back to you. — Redemption Collision, Humble TX"
+      },
+      "id": "node-send-sms",
+      "name": "5. Send Text-Back SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [700, 340],
+      "credentials": {
+        "twilioApi": {
+          "id": "YOUR_TWILIO_CRED_ID",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><Response></Response>",
+        "options": {
+          "responseHeaders": {
+            "entries": [
+              {
+                "name": "Content-Type",
+                "value": "text/xml"
+              }
+            ]
+          }
+        }
+      },
+      "id": "node-status-200",
+      "name": "6. Return Empty TwiML",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [920, 400]
+    }
+  ],
+  "connections": {
+    "1. Incoming Call (Voice URL)": {
+      "main": [
+        [{"node": "2. Return TwiML (Dial Real Number)", "type": "main", "index": 0}]
+      ]
+    },
+    "3. Call Status Callback": {
+      "main": [
+        [{"node": "4. Was Call Missed?", "type": "main", "index": 0}]
+      ]
+    },
+    "4. Was Call Missed?": {
+      "main": [
+        [{"node": "5. Send Text-Back SMS", "type": "main", "index": 0}],
+        [{"node": "6. Return Empty TwiML", "type": "main", "index": 0}]
+      ]
+    },
+    "5. Send Text-Back SMS": {
+      "main": [
+        [{"node": "6. Return Empty TwiML", "type": "main", "index": 0}]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "meta": {
+    "templateId": "redemption-missed-call-textback",
+    "instanceId": "redemption-collision"
+  }
+}
