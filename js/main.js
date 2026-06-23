@@ -40,22 +40,14 @@ if (form) {
 
     btn.textContent = "Sending...";
     btn.disabled = true;
-
-    const data = new FormData(form);
-    const payload = {
-      name: data.get("name"),
-      phone: data.get("phone"),
-      email: data.get("email"),
-      service: data.get("service"),
-      message: data.get("message"),
-    };
+    status.textContent = "";
+    status.className = "form-status";
 
     try {
-      const res = await fetch("https://formspree.io/f/redemptioncollision", {
+      const res = await fetch(form.action, {
         method: "POST",
-        body: JSON.stringify(payload),
+        body: new FormData(form),
         headers: {
-          "Content-Type": "application/json",
           Accept: "application/json",
         },
       });

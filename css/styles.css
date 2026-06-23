@@ -614,6 +614,12 @@ a:hover {
   letter-spacing: 1px;
   margin-bottom: 32px;
 }
+.why-lead {
+  color: rgba(245, 245, 245, 0.82);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 26px;
+}
 
 .why-list {
   list-style: none;
@@ -2024,41 +2030,6 @@ a:hover {
 }
 
 /* =========================================
-   TRUST STRIP
-   ========================================= */
-.trust-strip {
-  background: rgba(18, 68, 200, 0.08);
-  border-top: 1px solid rgba(18, 68, 200, 0.2);
-  border-bottom: 1px solid rgba(18, 68, 200, 0.2);
-  padding: 14px 0;
-}
-
-.trust-strip-inner {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 8px 32px;
-}
-
-.trust-badge {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.8px;
-  color: rgba(245, 245, 245, 0.75);
-  white-space: nowrap;
-}
-
-.trust-badge svg {
-  color: var(--color-blue);
-  flex-shrink: 0;
-}
-
-/* =========================================
    GLOBAL UX IMPROVEMENTS
    ========================================= */
 
@@ -2109,7 +2080,6 @@ a:hover {
 .reviews-section,
 .reviews-banner,
 .google-review-cta,
-.trust-strip,
 .about-owner-section {
   background: rgba(5, 5, 5, 0.55) !important;
   position: relative;
@@ -2252,50 +2222,66 @@ a:hover {
 }
 
 /* =========================================
-   TOP BANNER
+   HERO ACTION BANNER
    ========================================= */
-.top-banner {
-  background: linear-gradient(90deg, #1244c8 0%, #0a32a0 100%);
-  color: #fff;
-  text-align: center;
-  padding: 10px 16px;
-  font-size: 0.82rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-  position: relative;
-  z-index: 200;
+.hero-action-banner {
+  display: grid;
+  gap: 18px;
+  margin-top: 28px;
+  padding: 22px;
+  background: rgba(8, 8, 20, 0.82);
+  border: 1px solid rgba(34, 85, 224, 0.45);
+  border-radius: 14px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 }
-.top-banner-inner {
+.hero-action-copy {
+  display: grid;
+  gap: 4px;
+  color: rgba(245, 245, 245, 0.92);
+  font-weight: 700;
+  line-height: 1.35;
+}
+.hero-action-copy span {
+  color: #fff;
+}
+.hero-action-copy strong {
+  color: var(--color-gold);
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+.hero-action-links {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+.hero-action-link {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 8px 16px;
-}
-.top-banner-divider {
-  opacity: 0.4;
-}
-.top-banner-link {
-  color: #f5a623;
+  min-height: 50px;
+  border-radius: 8px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  letter-spacing: 0.7px;
+  text-transform: uppercase;
   text-decoration: none;
-  font-weight: 700;
+  transition: var(--transition);
 }
-.top-banner-link:hover {
-  text-decoration: underline;
+.hero-action-call {
+  background: var(--color-blue);
+  color: #fff;
 }
-
-/* =========================================
-   HERO CTA GROUP
-   ========================================= */
-.hero-cta-group {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  align-items: center;
-  margin-bottom: 0;
+.hero-action-text {
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  color: #fff;
 }
-.hero-text-btn {
-  white-space: nowrap;
+.hero-action-link:hover {
+  transform: translateY(-1px);
 }
 
 /* =========================================
@@ -2418,26 +2404,19 @@ a:hover {
    RESPONSIVE — NEW SECTIONS
    ========================================= */
 @media (max-width: 640px) {
-  .top-banner-divider {
-    display: none;
-  }
-  .top-banner-inner {
-    flex-direction: column;
-    gap: 4px;
-  }
   .why-grid {
     grid-template-columns: 1fr;
   }
+  .hero-action-banner {
+    margin-top: 24px;
+    padding: 18px;
+  }
+  .hero-action-copy {
+    align-items: center;
+    text-align: center;
+  }
   .photo-upload-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  .hero-cta-group {
-    flex-direction: column;
-    width: 100%;
-  }
-  .hero-cta-group .btn {
-    width: 100%;
-    justify-content: center;
   }
   .map-cta {
     flex-direction: column;

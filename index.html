@@ -63,19 +63,6 @@
     </script>
   </head>
   <body>
-    <!-- Top Announcement Banner -->
-    <div class="top-banner" role="banner" aria-label="Special offer">
-      <div class="top-banner-inner">
-        <span>🚗 Need your car fixed today?</span>
-        <span class="top-banner-divider">|</span>
-        <span>💳 Financing up to $5,000 available</span>
-        <span class="top-banner-divider">|</span>
-        <a href="sms:3464715322" class="top-banner-link"
-          >📱 Text Photos Now: (346) 471-5322</a
-        >
-      </div>
-    </div>
-
     <!-- Fixed full-page video background -->
     <div id="page-video-bg" aria-hidden="true">
       <video autoplay loop muted playsinline preload="auto">
@@ -141,32 +128,22 @@
               >One Call Does It All.</span
             >
           </h1>
-
-          <div class="hero-cta-group">
-            <a
-              href="tel:3464715322"
-              class="btn btn-primary btn-lg hero-call-btn"
-            >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-              >
-                <path
-                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
-                />
-              </svg>
-              Call Now: (346) 471-5322
-            </a>
-            <a
-              href="sms:3464715322"
-              class="btn btn-outline btn-lg hero-text-btn"
-            >
-              📱 Text Photos for Estimate
-            </a>
+          <div
+            class="hero-action-banner"
+            aria-label="Repair financing and estimate options"
+          >
+            <div class="hero-action-copy">
+              <span>Need your car fixed today?</span>
+              <strong>Financing up to $5,000 available</strong>
+            </div>
+            <div class="hero-action-links">
+              <a href="tel:3464715322" class="hero-action-link hero-action-call">
+                Call Now: (346) 471-5322
+              </a>
+              <a href="sms:3464715322" class="hero-action-link hero-action-text">
+                Text Photos for Estimate
+              </a>
+            </div>
           </div>
         </div>
 
@@ -180,6 +157,12 @@
             enctype="multipart/form-data"
             class="estimate-form"
           >
+            <input
+              type="hidden"
+              name="_subject"
+              value="New quick estimate request from Redemption Collision Center"
+            />
+            <input type="hidden" name="form_source" value="Homepage hero estimate" />
             <div class="form-group">
               <label for="name">Your Name</label>
               <input
@@ -299,104 +282,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Trust Strip -->
-    <div class="trust-strip" role="list" aria-label="Business credentials">
-      <div class="container trust-strip-inner">
-        <div class="trust-badge" role="listitem">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            aria-hidden="true"
-          >
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          </svg>
-          Black Owned
-        </div>
-        <div class="trust-badge" role="listitem">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            aria-hidden="true"
-          >
-            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-            <circle cx="9" cy="7" r="4" />
-            <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
-            <path d="M16 3.13a4 4 0 0 1 0 7.75" />
-          </svg>
-          Family Owned Since 2011
-        </div>
-        <div class="trust-badge" role="listitem">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            aria-hidden="true"
-          >
-            <polygon
-              points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"
-            />
-          </svg>
-          Top 3 Google — Humble TX
-        </div>
-        <div class="trust-badge" role="listitem">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            aria-hidden="true"
-          >
-            <line x1="12" y1="1" x2="12" y2="23" />
-            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
-          </svg>
-          Free Estimates
-        </div>
-        <div class="trust-badge" role="listitem">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            aria-hidden="true"
-          >
-            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
-          Insurance Friendly
-        </div>
-        <div class="trust-badge" role="listitem">
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            aria-hidden="true"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
-          </svg>
-          Fast Turnaround
-        </div>
-      </div>
-    </div>
 
     <!-- Google Reviews CTA — paired with the sliding reviews -->
     <section class="testimonials-section testimonials-section--compact">
@@ -962,7 +847,22 @@
         </div>
         <div class="why-content">
           <h2>Why Humble Drivers Choose Redemption</h2>
+          <p class="why-lead">
+            Here's what separates us from other shops in Humble: practical
+            help, clear communication, and one team that can handle the full
+            repair path.
+          </p>
           <ul class="why-list">
+            <li>
+              <strong>Top 3 Google Reviews in Humble</strong>
+              Real customers trust the work, the service, and the way we keep
+              them informed.
+            </li>
+            <li>
+              <strong>13+ Years Experience</strong>
+              Founded in New Orleans, now bringing that collision and auto body
+              experience to Humble and Greater Houston.
+            </li>
             <li>
               <strong>Free Estimates, Always</strong>
               No obligation. Call or text and we'll walk you through the damage
@@ -979,9 +879,14 @@
               Let us handle the paperwork — we make the process easy.
             </li>
             <li>
+              <strong>Financing Available</strong>
+              Get approved up to $5,000. All credit types welcome, subject to
+              lender approval.
+            </li>
+            <li>
               <strong>True One Stop Shop</strong>
-              Collision, body, mechanical, roadside, financing — everything
-              under one roof. No need to go anywhere else.
+              Collision, body, mechanical, roadside, towing, notary, and
+              financing — everything under one roof.
             </li>
             <li>
               <strong>Fast Turnaround</strong>
@@ -1221,79 +1126,6 @@
                 loading="lazy"
               />
               <span class="gallery-tag tag-after">After</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why Choose Redemption -->
-    <section class="why-section" id="why-us">
-      <div class="container">
-        <div class="section-header">
-          <h2>Why Choose Redemption?</h2>
-          <p>Here's what separates us from every other shop in Humble.</p>
-        </div>
-        <div class="why-grid">
-          <div class="why-item">
-            <span class="why-check">✅</span>
-            <div>
-              <strong>Top 3 Google Reviews in Humble</strong>
-              <p>Voted by real customers — not paid ads.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-check">✅</span>
-            <div>
-              <strong>13+ Years Experience</strong>
-              <p>
-                Founded in New Orleans, now bringing that expertise to Houston.
-              </p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-check">✅</span>
-            <div>
-              <strong>Insurance Claims Assistance</strong>
-              <p>
-                We work directly with your insurance company — you don't have
-                to.
-              </p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-check">✅</span>
-            <div>
-              <strong>Snap Financing Available</strong>
-              <p>Get approved up to $5,000. All credit types welcome.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-check">✅</span>
-            <div>
-              <strong>Towing &amp; 24/7 Roadside</strong>
-              <p>Stranded? One call and we're on the way.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-check">✅</span>
-            <div>
-              <strong>Frame Straightening</strong>
-              <p>Structural repairs done right — not just cosmetic fixes.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-check">✅</span>
-            <div>
-              <strong>Free Estimates — Always</strong>
-              <p>No obligation. Know your cost before you commit.</p>
-            </div>
-          </div>
-          <div class="why-item">
-            <span class="why-check">✅</span>
-            <div>
-              <strong>Black &amp; Family Owned</strong>
-              <p>Community-first shop. We treat every car like it's our own.</p>
             </div>
           </div>
         </div>
