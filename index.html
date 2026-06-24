@@ -127,7 +127,8 @@
           <div class="hero-eyebrow">Humble, TX · Serving Greater Houston</div>
           <h1>
             Collision Repair. Mechanical.<br /><span class="hero-accent"
-              >One Call Does It<span class="mobile-break"><br /></span> All.</span
+              >One Call Does It<span class="mobile-break"><br /></span>
+              All.</span
             >
           </h1>
           <div
@@ -139,10 +140,16 @@
               <strong>Financing up to $5,000 available</strong>
             </div>
             <div class="hero-action-links">
-              <a href="tel:3464715322" class="hero-action-link hero-action-call">
+              <a
+                href="tel:3464715322"
+                class="hero-action-link hero-action-call"
+              >
                 Call Now: (346) 471-5322
               </a>
-              <a href="sms:3464715322" class="hero-action-link hero-action-text">
+              <a
+                href="sms:3464715322"
+                class="hero-action-link hero-action-text"
+              >
                 Text Photos for Estimate
               </a>
             </div>
@@ -164,7 +171,11 @@
               name="_subject"
               value="New quick estimate request from Redemption Collision Center"
             />
-            <input type="hidden" name="form_source" value="Homepage hero estimate" />
+            <input
+              type="hidden"
+              name="form_source"
+              value="Homepage hero estimate"
+            />
             <div class="form-group">
               <label for="name">Your Name</label>
               <input
@@ -850,9 +861,9 @@
         <div class="why-content">
           <h2>Why Humble Drivers Choose Redemption</h2>
           <p class="why-lead">
-            Here's what separates us from other shops in Humble: practical
-            help, clear communication, and one team that can handle the full
-            repair path.
+            Here's what separates us from other shops in Humble: practical help,
+            clear communication, and one team that can handle the full repair
+            path.
           </p>
           <ul class="why-list">
             <li>
@@ -1206,6 +1217,40 @@
       </div>
     </section>
 
+    <!-- Service Area -->
+    <section
+      style="
+        padding: 35px 20px;
+        background: #f1faee;
+        text-align: center;
+        border-top: 3px solid #1d3557;
+      "
+    >
+      <h2 style="color: #1d3557; margin: 0 0 10px">
+        Proudly Serving the Greater Humble Area
+      </h2>
+      <p
+        style="
+          font-size: 16px;
+          color: #333;
+          max-width: 600px;
+          margin: 0 auto 15px;
+        "
+      >
+        We serve customers across:
+        <strong
+          >Humble · Atascocita · Kingwood · Summerwood · Fall Creek · Eagle
+          Springs · Baytown</strong
+        >
+      </p>
+      <p style="color: #666; font-size: 14px">
+        ZIP codes served: 77396 · 77345 · 77339 · 77346 · 77044 · 77338
+      </p>
+      <p style="color: #666; font-size: 14px">
+        Family-owned in Humble, TX since 2011. One call. We do it all.
+      </p>
+    </section>
+
     <!-- Footer -->
     <footer class="site-footer">
       <div class="container footer-grid">
@@ -1325,9 +1370,9 @@
           HTMLFormElement.prototype.submit.call(form);
         };
         const getSelectedFiles = () => {
-          return Array.from(form.querySelectorAll('input[type="file"]')).flatMap(
-            (input) => Array.from(input.files || [])
-          );
+          return Array.from(
+            form.querySelectorAll('input[type="file"]'),
+          ).flatMap((input) => Array.from(input.files || []));
         };
         const selectedFileError = () => {
           const files = getSelectedFiles();
@@ -1423,24 +1468,26 @@
           } catch (err) {
             // Error state
             showFormError(
-              "Something went wrong. Please call us at (346) 471-5322."
+              "Something went wrong. Please call us at (346) 471-5322.",
             );
           }
         });
       })();
     </script>
-  <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6a3af0abad14dc1d441d0440/1jrr3o7pu';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
-</body>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+      var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+      (function () {
+        var s1 = document.createElement("script"),
+          s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = "https://embed.tawk.to/6a3af0abad14dc1d441d0440/1jrr3o7pu";
+        s1.charset = "UTF-8";
+        s1.setAttribute("crossorigin", "*");
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+    </script>
+    <!--End of Tawk.to Script-->
+  </body>
 </html>
