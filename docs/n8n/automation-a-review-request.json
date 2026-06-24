@@ -1,0 +1,121 @@
+{
+  "name": "Redemption — A: Review Request (48hr post-booking)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "redemption-booking",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "aa-001-webhook",
+      "name": "Cal.com Booking Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "redemption-booking"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "caseSensitive": false, "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "is-booking-created",
+              "leftValue": "={{ $json.body.triggerEvent }}",
+              "rightValue": "BOOKING_CREATED",
+              "operator": { "type": "string", "operation": "equals" }
+            }
+          ],
+          "combinator": "and"
+        }
+      },
+      "id": "aa-002-if",
+      "name": "Is New Booking?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "OK",
+        "options": {}
+      },
+      "id": "aa-003-ack",
+      "name": "Acknowledge Cal.com",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [680, 440]
+    },
+    {
+      "parameters": {
+        "amount": 48,
+        "unit": "hours"
+      },
+      "id": "aa-004-wait",
+      "name": "Wait 48 Hours",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [680, 180]
+    },
+    {
+      "parameters": {
+        "from": "REPLACE_WITH_TWILIO_NUMBER",
+        "to": "={{ $('Cal.com Booking Webhook').item.json.body.attendees[0].phoneNumber }}",
+        "message": "={{ 'Hi ' + $('Cal.com Booking Webhook').item.json.body.attendees[0].name.split(' ')[0] + '! Thanks for choosing Redemption Collision Center. If we took great care of you, please take 30 seconds to leave us a Google review — it helps our family shop more than you know! → REPLACE_WITH_GOOGLE_REVIEW_LINK\\n\\n— Redemption Collision, Humble TX (346) 471-5322' }}"
+      },
+      "id": "aa-005-sms",
+      "name": "Send Review Request SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [900, 180],
+      "credentials": {
+        "twilioApi": {
+          "id": "REPLACE_WITH_TWILIO_CRED_ID",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "OK",
+        "options": {}
+      },
+      "id": "aa-006-done",
+      "name": "Done",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [1120, 180]
+    }
+  ],
+  "connections": {
+    "Cal.com Booking Webhook": {
+      "main": [[{ "node": "Is New Booking?", "type": "main", "index": 0 }]]
+    },
+    "Is New Booking?": {
+      "main": [
+        [{ "node": "Wait 48 Hours", "type": "main", "index": 0 }],
+        [{ "node": "Acknowledge Cal.com", "type": "main", "index": 0 }]
+      ]
+    },
+    "Wait 48 Hours": {
+      "main": [
+        [{ "node": "Send Review Request SMS", "type": "main", "index": 0 }]
+      ]
+    },
+    "Send Review Request SMS": {
+      "main": [[{ "node": "Done", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": { "templateId": "redemption-auto-a" },
+  "_setup_notes": {
+    "step1": "In Cal.com: Settings → Webhooks → Add Webhook → URL: https://rrichanell.app.n8n.cloud/webhook/redemption-booking → Check BOOKING_CREATED",
+    "step2": "Replace REPLACE_WITH_TWILIO_NUMBER with your Twilio number (+1XXXXXXXXXX)",
+    "step3": "Replace REPLACE_WITH_GOOGLE_REVIEW_LINK with your Google review URL (find it in GBP → Get more reviews)",
+    "step4": "Replace REPLACE_WITH_TWILIO_CRED_ID after selecting your Twilio credential in n8n"
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "name": "Redemption — E: After-Hours Chat → Owner SMS Alert",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "redemption-tawkto",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "ae-001-webhook",
+      "name": "Tawk.to Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [240, 300],
+      "webhookId": "redemption-tawkto"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "OK",
+        "options": {}
+      },
+      "id": "ae-002-ack",
+      "name": "Acknowledge Tawk.to",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [460, 440]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "// Check if current time is outside business hours (Mon-Fri 9am-5pm CST)\nconst now = new Date();\n// Convert to CST (UTC-6, or UTC-5 during daylight saving)\nconst cstOffset = -6 * 60; // minutes\nconst utcMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();\nconst cstMinutes = ((utcMinutes + cstOffset) + 1440) % 1440;\nconst cstHour = Math.floor(cstMinutes / 60);\nconst dayOfWeek = new Date(now.getTime() + cstOffset * 60 * 1000).getUTCDay(); // 0=Sun, 6=Sat\n\nconst isWeekend = dayOfWeek === 0 || dayOfWeek === 6;\nconst isBeforeOpen = cstHour < 9;\nconst isAfterClose = cstHour >= 17;\nconst isAfterHours = isWeekend || isBeforeOpen || isAfterClose;\n\nreturn [{ json: { ...$input.first().json, isAfterHours, cstHour, dayOfWeek } }];"
+      },
+      "id": "ae-003-timecheck",
+      "name": "Check Business Hours (CST)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 180]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": { "typeValidation": "loose" },
+          "conditions": [
+            {
+              "id": "is-after-hours",
+              "leftValue": "={{ $json.isAfterHours }}",
+              "rightValue": true,
+              "operator": { "type": "boolean", "operation": "true" }
+            }
+          ]
+        }
+      },
+      "id": "ae-004-if",
+      "name": "Is After Hours?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 180]
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const body = $input.first().json.body || {};\n// Tawk.to sends visitor info in different fields depending on event type\nconst visitorName = body.visitor?.name || body.chat?.visitor?.name || 'Someone';\nconst visitorEmail = body.visitor?.email || body.chat?.visitor?.email || 'no email';\nconst message = body.message?.text || body.chat?.message?.text || '(no message text)';\nconst event = body.event || 'chat_started';\n\nreturn [{ json: { visitorName, visitorEmail, message, event } }];"
+      },
+      "id": "ae-005-extract",
+      "name": "Extract Visitor Info",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [900, 180]
+    },
+    {
+      "parameters": {
+        "from": "REPLACE_WITH_TWILIO_NUMBER",
+        "to": "REPLACE_WITH_OWNER_PHONE",
+        "message": "={{ '🔔 AFTER-HOURS CHAT — Redemption Collision\\n\\nVisitor: ' + $json.visitorName + '\\nEmail: ' + $json.visitorEmail + '\\nMessage: \"' + $json.message + '\"\\n\\nLog into tawk.to to respond or text them back.' }}"
+      },
+      "id": "ae-006-sms",
+      "name": "Alert Owner by SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [1120, 180],
+      "credentials": {
+        "twilioApi": {
+          "id": "REPLACE_WITH_TWILIO_CRED_ID",
+          "name": "Twilio account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Tawk.to Webhook": {
+      "main": [
+        [
+          { "node": "Acknowledge Tawk.to", "type": "main", "index": 0 },
+          { "node": "Check Business Hours (CST)", "type": "main", "index": 0 }
+        ]
+      ]
+    },
+    "Check Business Hours (CST)": {
+      "main": [[{ "node": "Is After Hours?", "type": "main", "index": 0 }]]
+    },
+    "Is After Hours?": {
+      "main": [
+        [{ "node": "Extract Visitor Info", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Extract Visitor Info": {
+      "main": [[{ "node": "Alert Owner by SMS", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": { "templateId": "redemption-auto-e" },
+  "_setup_notes": {
+    "step1": "Replace REPLACE_WITH_OWNER_PHONE with the owner's personal cell number (+1XXXXXXXXXX)",
+    "step2": "In Tawk.to: Admin → Settings → Integrations → Webhooks → Add webhook URL: https://rrichanell.app.n8n.cloud/webhook/redemption-tawkto → check 'chat_started' and 'new_message'",
+    "step3": "Replace REPLACE_WITH_TWILIO_NUMBER and REPLACE_WITH_TWILIO_CRED_ID",
+    "note": "During business hours (Mon-Fri 9am-5pm CST) the workflow exits silently — owner handles chat normally. Only fires alerts after hours."
+  }
+}

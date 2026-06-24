@@ -1,0 +1,133 @@
+{
+  "name": "Redemption — D: 6-Month Service Reminder",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{ "field": "cronExpression", "expression": "0 9 * * 1" }]
+        }
+      },
+      "id": "ad-001-schedule",
+      "name": "Every Monday 9am",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "readOrSearch",
+        "documentId": {
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "__rl": true,
+          "mode": "id"
+        },
+        "sheetName": { "value": "PastCustomers", "__rl": true, "mode": "name" },
+        "options": {}
+      },
+      "id": "ad-002-sheets",
+      "name": "Read Past Customers Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [460, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_WITH_GSHEETS_CRED_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const today = new Date();\nconst items = [];\n\nfor (const item of $input.all()) {\n  const row = item.json;\n  if (!row.ServiceDate || !row.Phone) continue;\n  \n  const serviceDate = new Date(row.ServiceDate);\n  const monthsDiff = (today.getFullYear() - serviceDate.getFullYear()) * 12 \n    + (today.getMonth() - serviceDate.getMonth());\n\n  // Send at 6 months if not already sent\n  const send6 = monthsDiff >= 6 && monthsDiff < 7 && row.Sent6Month === 'FALSE';\n  // Send at 12 months if not already sent  \n  const send12 = monthsDiff >= 12 && monthsDiff < 13 && row.Sent12Month === 'FALSE';\n\n  if (send6 || send12) {\n    items.push({ json: { ...row, sendMonth: send12 ? 12 : 6 } });\n  }\n}\n\nreturn items;"
+      },
+      "id": "ad-003-code",
+      "name": "Filter: 6 or 12 Months Since Service",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "from": "REPLACE_WITH_TWILIO_NUMBER",
+        "to": "={{ $json.Phone }}",
+        "message": "={{ (() => { const name = $json.Name.split(' ')[0]; const mo = $json.sendMonth; if (mo === 6) return 'Hey ' + name + '! It\\'s been 6 months since your last service at Redemption Collision. Stop in for a free multi-point inspection — no appointment needed. (346) 471-5322, Humble TX'; return 'Hi ' + name + ', it\\'s been a year since we serviced your vehicle at Redemption Collision. We\\'d love to see you again! Free estimates always. (346) 471-5322'; })() }}"
+      },
+      "id": "ad-004-sms",
+      "name": "Send Reminder SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [900, 300],
+      "credentials": {
+        "twilioApi": {
+          "id": "REPLACE_WITH_TWILIO_CRED_ID",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "__rl": true,
+          "mode": "id"
+        },
+        "sheetName": { "value": "PastCustomers", "__rl": true, "mode": "name" },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RowNumber": "={{ $json['row_number'] }}",
+            "Sent6Month": "={{ $json.sendMonth === 6 ? 'TRUE' : $json.Sent6Month }}",
+            "Sent12Month": "={{ $json.sendMonth === 12 ? 'TRUE' : $json.Sent12Month }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "ad-005-update",
+      "name": "Mark Sent in Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1120, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_WITH_GSHEETS_CRED_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every Monday 9am": {
+      "main": [
+        [{ "node": "Read Past Customers Sheet", "type": "main", "index": 0 }]
+      ]
+    },
+    "Read Past Customers Sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter: 6 or 12 Months Since Service",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: 6 or 12 Months Since Service": {
+      "main": [[{ "node": "Send Reminder SMS", "type": "main", "index": 0 }]]
+    },
+    "Send Reminder SMS": {
+      "main": [[{ "node": "Mark Sent in Sheet", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": { "templateId": "redemption-auto-d" },
+  "_setup_notes": {
+    "sheet_structure": "Create a Google Sheet named 'PastCustomers' with columns: Name | Phone | Vehicle | ServiceDate | ServiceType | Sent6Month | Sent12Month",
+    "sheet_defaults": "Sent6Month and Sent12Month default = FALSE. ServiceDate format = YYYY-MM-DD",
+    "usage": "Add a row every time a customer picks up their car. That's it — automation handles the rest.",
+    "same_sheet_id": "Can use the same Google Sheet file as Automation C — just add a second tab named PastCustomers"
+  }
+}

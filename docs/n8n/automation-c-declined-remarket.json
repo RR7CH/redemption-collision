@@ -1,0 +1,186 @@
+{
+  "name": "Redemption — C: Declined Work Re-market (30/60/90 days)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "cronExpression", "expression": "0 10 * * 1-5" }
+          ]
+        }
+      },
+      "id": "ac-001-schedule",
+      "name": "Daily 10am Check (Mon–Fri)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "operation": "readOrSearch",
+        "documentId": {
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "__rl": true,
+          "mode": "id"
+        },
+        "sheetName": {
+          "value": "DeclinedEstimates",
+          "__rl": true,
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Sent90",
+              "lookupValue": "FALSE"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "ac-002-sheets",
+      "name": "Read Declined Estimates Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [460, 300],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_WITH_GSHEETS_CRED_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "language": "javaScript",
+        "jsCode": "const today = new Date();\nconst items = [];\n\nfor (const item of $input.all()) {\n  const row = item.json;\n  const declined = new Date(row.DeclineDate);\n  const daysDiff = Math.floor((today - declined) / (1000 * 60 * 60 * 24));\n  \n  let sendText = false;\n  let day = null;\n\n  if (daysDiff >= 90 && row.Sent90 === 'FALSE') {\n    sendText = true; day = 90;\n  } else if (daysDiff >= 60 && row.Sent60 === 'FALSE') {\n    sendText = true; day = 60;\n  } else if (daysDiff >= 30 && row.Sent30 === 'FALSE') {\n    sendText = true; day = 30;\n  }\n\n  if (sendText) {\n    items.push({ json: { ...row, sendDay: day, daysDiff } });\n  }\n}\n\nreturn items;"
+      },
+      "id": "ac-003-code",
+      "name": "Filter: Who Gets a Text Today?",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "conditions": [
+            {
+              "id": "has-phone",
+              "leftValue": "={{ $json.Phone }}",
+              "rightValue": "",
+              "operator": { "type": "string", "operation": "notEmpty" }
+            }
+          ]
+        }
+      },
+      "id": "ac-004-if",
+      "name": "Has Phone Number?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [900, 300]
+    },
+    {
+      "parameters": {
+        "from": "REPLACE_WITH_TWILIO_NUMBER",
+        "to": "={{ $json.Phone }}",
+        "message": "={{ (() => { const name = $json.Name.split(' ')[0]; const day = $json.sendDay; if (day === 30) return 'Hey ' + name + '! This is Redemption Collision Center. Checking back on that estimate — still need the repair done? We offer financing up to $5,000 and free estimates. (346) 471-5322'; if (day === 60) return 'Hi ' + name + ', Redemption Collision here. Your repair estimate is still on file. Ready when you are — call/text (346) 471-5322 or book at REPLACE_WITH_CAL_LINK'; return 'Last check-in from Redemption Collision, ' + name + '. We\\'d love to help you get that repair done. Financing available. (346) 471-5322 — reply STOP to opt out.'; })() }}"
+      },
+      "id": "ac-005-sms",
+      "name": "Send Re-market SMS",
+      "type": "n8n-nodes-base.twilio",
+      "typeVersion": 1,
+      "position": [1120, 180],
+      "credentials": {
+        "twilioApi": {
+          "id": "REPLACE_WITH_TWILIO_CRED_ID",
+          "name": "Twilio account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "__rl": true,
+          "mode": "id"
+        },
+        "sheetName": {
+          "value": "DeclinedEstimates",
+          "__rl": true,
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "RowNumber": "={{ $json['row_number'] }}",
+            "Sent30": "={{ $json.sendDay >= 30 ? 'TRUE' : $json.Sent30 }}",
+            "Sent60": "={{ $json.sendDay >= 60 ? 'TRUE' : $json.Sent60 }}",
+            "Sent90": "={{ $json.sendDay >= 90 ? 'TRUE' : $json.Sent90 }}"
+          }
+        },
+        "options": {}
+      },
+      "id": "ac-006-update",
+      "name": "Mark Sent in Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [1340, 180],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_WITH_GSHEETS_CRED_ID",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily 10am Check (Mon–Fri)": {
+      "main": [
+        [
+          {
+            "node": "Read Declined Estimates Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read Declined Estimates Sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter: Who Gets a Text Today?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Who Gets a Text Today?": {
+      "main": [[{ "node": "Has Phone Number?", "type": "main", "index": 0 }]]
+    },
+    "Has Phone Number?": {
+      "main": [
+        [{ "node": "Send Re-market SMS", "type": "main", "index": 0 }],
+        []
+      ]
+    },
+    "Send Re-market SMS": {
+      "main": [[{ "node": "Mark Sent in Sheet", "type": "main", "index": 0 }]]
+    }
+  },
+  "active": false,
+  "settings": { "executionOrder": "v1" },
+  "meta": { "templateId": "redemption-auto-c" },
+  "_setup_notes": {
+    "sheet_structure": "Create a Google Sheet named 'DeclinedEstimates' with columns: Name | Phone | Service | DeclineDate | Sent30 | Sent60 | Sent90",
+    "sheet_defaults": "Sent30/60/90 default value = FALSE. DeclineDate format = YYYY-MM-DD",
+    "step1": "Create Google Sheet → share with your Google Sheets service account email in n8n",
+    "step2": "Replace REPLACE_WITH_GOOGLE_SHEET_ID with the Sheet ID from the URL",
+    "step3": "Replace REPLACE_WITH_GSHEETS_CRED_ID after setting up Google Sheets OAuth in n8n",
+    "step4": "Replace REPLACE_WITH_TWILIO_NUMBER and REPLACE_WITH_CAL_LINK",
+    "usage": "When a customer declines an estimate, add their row to the sheet. The workflow handles the rest."
+  }
+}
