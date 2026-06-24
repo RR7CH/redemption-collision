@@ -8,12 +8,29 @@ if (toggle && nav) {
     toggle.setAttribute("aria-expanded", open);
   });
 
-  // Close menu on link click
+  // Close menu on link click (but not the dropdown trigger on mobile)
   nav.querySelectorAll("a").forEach((link) => {
-    link.addEventListener("click", () => {
+    link.addEventListener("click", (e) => {
+      if (link.classList.contains("nav-dropdown-trigger")) return;
       nav.classList.remove("open");
       toggle.setAttribute("aria-expanded", "false");
     });
+  });
+}
+
+// Services dropdown toggle (mobile tap, desktop hover via CSS)
+const dropdown = document.querySelector(".nav-dropdown");
+const dropdownTrigger = document.querySelector(".nav-dropdown-trigger");
+if (dropdown && dropdownTrigger) {
+  dropdownTrigger.addEventListener("click", (e) => {
+    // Only intercept on mobile (when mobile-toggle is visible)
+    const isMobile =
+      window.getComputedStyle(document.querySelector(".mobile-toggle"))
+        .display !== "none";
+    if (isMobile) {
+      e.preventDefault();
+      dropdown.classList.toggle("open");
+    }
   });
 }
 
@@ -33,7 +50,7 @@ if (form) {
 
   const getSelectedFiles = () => {
     return Array.from(form.querySelectorAll('input[type="file"]')).flatMap(
-      (input) => Array.from(input.files || [])
+      (input) => Array.from(input.files || []),
     );
   };
 
