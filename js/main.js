@@ -34,6 +34,57 @@ if (dropdown && dropdownTrigger) {
   });
 }
 
+// FAQ accordions: keep one answer open at a time.
+document.querySelectorAll("[data-faq-accordion]").forEach((accordion) => {
+  const items = Array.from(accordion.querySelectorAll(".faq-item"));
+
+  const closeItem = (item) => {
+    const button = item.querySelector(".faq-question");
+    const panel = item.querySelector(".faq-answer");
+    if (!button || !panel || panel.hidden) return;
+
+    item.classList.remove("is-open");
+    button.setAttribute("aria-expanded", "false");
+
+    const hidePanel = () => {
+      if (!item.classList.contains("is-open")) panel.hidden = true;
+      panel.removeEventListener("transitionend", hidePanel);
+    };
+
+    panel.addEventListener("transitionend", hidePanel);
+    window.setTimeout(hidePanel, 320);
+  };
+
+  const openItem = (item) => {
+    const button = item.querySelector(".faq-question");
+    const panel = item.querySelector(".faq-answer");
+    if (!button || !panel) return;
+
+    items.forEach((otherItem) => {
+      if (otherItem !== item) closeItem(otherItem);
+    });
+
+    panel.hidden = false;
+    button.setAttribute("aria-expanded", "true");
+    window.requestAnimationFrame(() => {
+      item.classList.add("is-open");
+    });
+  };
+
+  items.forEach((item) => {
+    const button = item.querySelector(".faq-question");
+    if (!button) return;
+
+    button.addEventListener("click", () => {
+      if (item.classList.contains("is-open")) {
+        closeItem(item);
+      } else {
+        openItem(item);
+      }
+    });
+  });
+});
+
 // Update copyright year
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
