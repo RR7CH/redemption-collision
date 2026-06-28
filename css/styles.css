@@ -832,6 +832,108 @@ a:hover {
   flex-wrap: wrap;
 }
 
+/* Service Area */
+.service-area-section {
+  padding: 84px 0;
+  background: rgba(5, 5, 5, 0.92);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 1;
+}
+
+.service-area-content {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.service-area-content h2,
+.service-area-list h3 {
+  font-family: var(--font-heading);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--color-light);
+}
+
+.service-area-content h2 {
+  max-width: 820px;
+  margin: 0 auto 28px;
+  text-align: center;
+  font-size: clamp(2rem, 5vw, 3.25rem);
+  line-height: 1.08;
+}
+
+.service-area-copy {
+  display: grid;
+  gap: 18px;
+  margin: 0 auto 44px;
+  max-width: 820px;
+}
+
+.service-area-copy p {
+  color: rgba(245, 245, 245, 0.82);
+  font-size: 1.02rem;
+  line-height: 1.8;
+}
+
+.service-area-list {
+  padding: clamp(24px, 4vw, 36px);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.service-area-list h3 {
+  margin-bottom: 20px;
+  color: var(--color-gold);
+  font-size: 1.25rem;
+}
+
+.service-area-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.service-area-card {
+  min-height: 92px;
+  padding: 18px;
+  background: rgba(18, 68, 200, 0.16);
+  border: 1px solid rgba(95, 140, 255, 0.26);
+  border-radius: 12px;
+}
+
+.service-area-card span,
+.service-area-card strong {
+  display: block;
+}
+
+.service-area-card span {
+  margin-bottom: 8px;
+  color: var(--color-light);
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  text-transform: uppercase;
+  letter-spacing: 0.75px;
+}
+
+.service-area-card strong {
+  color: rgba(245, 245, 245, 0.76);
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+@media (max-width: 768px) {
+  .service-area-section {
+    padding: 60px 0;
+  }
+
+  .service-area-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 /* =========================================
    SETMORE BOOKING
    ========================================= */
