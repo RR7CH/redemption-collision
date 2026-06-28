@@ -1981,6 +1981,14 @@ a:hover {
   color: var(--color-blue-light);
 }
 
+.mobile-photo-text-link {
+  display: none;
+  width: 100%;
+  margin-bottom: 28px;
+  justify-content: center;
+  text-align: center;
+}
+
 .contact-map {
   width: 100%;
   height: 220px;
@@ -2098,6 +2106,9 @@ a:hover {
   }
   .contact-form {
     padding: 24px;
+  }
+  .mobile-photo-text-link {
+    display: block;
   }
 }
 
