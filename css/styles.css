@@ -833,6 +833,64 @@ a:hover {
 }
 
 /* =========================================
+   SETMORE BOOKING
+   ========================================= */
+.booking-section {
+  padding: 72px 0;
+  background: rgba(5, 5, 5, 0.9);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  position: relative;
+  z-index: 1;
+}
+
+.booking-card {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(32px, 5vw, 48px);
+  text-align: center;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+}
+
+.booking-header {
+  margin-bottom: 28px;
+}
+
+.booking-widget {
+  display: flex;
+  justify-content: center;
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.booking-button.anywhere-book-now-button {
+  max-width: 100%;
+  white-space: normal;
+}
+
+@media (max-width: 640px) {
+  .booking-section {
+    padding: 56px 0;
+  }
+
+  .booking-card {
+    padding: 28px 18px;
+  }
+
+  .booking-widget {
+    width: 100%;
+  }
+
+  .booking-button.anywhere-book-now-button {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+/* =========================================
    FOOTER
    ========================================= */
 .site-footer {
