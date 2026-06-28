@@ -37,14 +37,17 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" type="image/png" href="images/favicon.svg" />
 
+    <!-- LocalBusiness and AutoRepair JSON-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "AutoRepair",
+        "@type": [
+          "LocalBusiness",
+          "AutoRepair"
+        ],
         "name": "Redemption Collision Center",
-        "image": "https://redemptioncollision.com/images/og-image.jpg",
         "url": "https://redemptioncollision.com",
-        "telephone": "+1-346-471-5322",
+        "telephone": "+13464715322",
         "email": "redemptioncollisioncenter@gmail.com",
         "address": {
           "@type": "PostalAddress",
@@ -54,29 +57,47 @@
           "postalCode": "77396",
           "addressCountry": "US"
         },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 29.9986,
-          "longitude": -95.2657
-        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "17:00"
+          }
+        ],
+        "areaServed": [
+          "Humble TX",
+          "Kingwood TX",
+          "Atascocita TX",
+          "Summerwood TX"
+        ],
         "priceRange": "$$",
-        "slogan": "One Call. We Do It All.",
-        "foundingDate": "2011",
-        "areaServed": "Greater Houston, TX",
-        "hasOfferCatalog": {
-          "@type": "OfferCatalog",
-          "name": "Mechanical Repair Services",
-          "itemListElement": [
-            {
-              "@type": "Offer",
-              "itemOffered": {
-                "@type": "Service",
-                "name": "Mechanical Repair",
-                "description": "Auto mechanic services in Humble TX including engine repair, brakes, suspension, diagnostics, and more."
-              }
-            }
-          ]
-        }
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=61573589950136",
+          "https://www.instagram.com/redemptioncollisioncenter/",
+          "https://share.google/SNlYMGMPX2Ydh8FMi"
+        ]
+      }
+    </script>
+
+    <!-- Service JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Mechanical Repair",
+        "provider": {
+          "@type": "LocalBusiness",
+          "name": "Redemption Collision Center"
+        },
+        "areaServed": "Humble, TX",
+        "description": "Mechanical repair in Humble, TX for diagnostics, brakes, engine issues, fluids, suspension, and related vehicle repairs."
       }
     </script>
   </head>

@@ -22,6 +22,70 @@
     />
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" type="image/png" href="images/favicon.svg" />
+
+    <!-- LocalBusiness and AutoRepair JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": [
+          "LocalBusiness",
+          "AutoRepair"
+        ],
+        "name": "Redemption Collision Center",
+        "url": "https://redemptioncollision.com",
+        "telephone": "+13464715322",
+        "email": "redemptioncollisioncenter@gmail.com",
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "3975 Atascocita Way",
+          "addressLocality": "Humble",
+          "addressRegion": "TX",
+          "postalCode": "77396",
+          "addressCountry": "US"
+        },
+        "openingHoursSpecification": [
+          {
+            "@type": "OpeningHoursSpecification",
+            "dayOfWeek": [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday"
+            ],
+            "opens": "09:00",
+            "closes": "17:00"
+          }
+        ],
+        "areaServed": [
+          "Humble TX",
+          "Kingwood TX",
+          "Atascocita TX",
+          "Summerwood TX"
+        ],
+        "priceRange": "$$",
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=61573589950136",
+          "https://www.instagram.com/redemptioncollisioncenter/",
+          "https://share.google/SNlYMGMPX2Ydh8FMi"
+        ]
+      }
+    </script>
+
+    <!-- Service JSON-LD -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Service",
+        "name": "Auto Body and Collision Services",
+        "provider": {
+          "@type": "LocalBusiness",
+          "name": "Redemption Collision Center"
+        },
+        "areaServed": "Humble, TX",
+        "description": "Auto body, collision repair, insurance claim assistance, mechanical repair, roadside assistance, financing, and notary services in Humble, TX."
+      }
+    </script>
   </head>
   <body>
     <div id="page-video-bg" aria-hidden="true">

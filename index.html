@@ -17,15 +17,17 @@
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="icon" type="image/png" href="images/favicon.svg" />
 
-    <!-- Schema.org LocalBusiness -->
+    <!-- LocalBusiness and AutoRepair JSON-LD -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "AutoBodyShop",
+        "@type": [
+          "LocalBusiness",
+          "AutoRepair"
+        ],
         "name": "Redemption Collision Center",
-        "image": "https://redemptioncollision.com/images/og-image.jpg",
         "url": "https://redemptioncollision.com",
-        "telephone": "+1-346-471-5322",
+        "telephone": "+13464715322",
         "email": "redemptioncollisioncenter@gmail.com",
         "address": {
           "@type": "PostalAddress",
@@ -34,11 +36,6 @@
           "addressRegion": "TX",
           "postalCode": "77396",
           "addressCountry": "US"
-        },
-        "geo": {
-          "@type": "GeoCoordinates",
-          "latitude": 29.9986,
-          "longitude": -95.2657
         },
         "openingHoursSpecification": [
           {
@@ -54,11 +51,18 @@
             "closes": "17:00"
           }
         ],
+        "areaServed": [
+          "Humble TX",
+          "Kingwood TX",
+          "Atascocita TX",
+          "Summerwood TX"
+        ],
         "priceRange": "$$",
-        "slogan": "One Call. We Do It All.",
-        "foundingDate": "2011",
-        "areaServed": "Greater Houston, TX",
-        "description": "Family-owned collision repair, auto body, mechanical, roadside, and financing in Humble TX. Top 3 Google Reviews 2025. Free estimates. Insurance claims welcome."
+        "sameAs": [
+          "https://www.facebook.com/profile.php?id=61573589950136",
+          "https://www.instagram.com/redemptioncollisioncenter/",
+          "https://share.google/SNlYMGMPX2Ydh8FMi"
+        ]
       }
     </script>
   </head>
