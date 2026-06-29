@@ -300,6 +300,26 @@
                 <a href="sms:3464715322">(346) 471-5322</a>
               </p>
             </div>
+            <div class="form-field tcpa-consent-field">
+              <label class="tcpa-label">
+                <input
+                  type="checkbox"
+                  id="tcpa-consent"
+                  name="tcpaConsent"
+                  required
+                />
+                By submitting this form, I agree to receive text messages from
+                Redemption Collision Center regarding my estimate and vehicle
+                repairs. Standard message and data rates may apply. Reply STOP
+                to unsubscribe at any time.
+              </label>
+              <span
+                class="tcpa-error"
+                id="tcpa-error"
+                style="display: none; color: #c00; font-size: 0.8rem"
+                >Please check the consent box to continue.</span
+              >
+            </div>
             <button
               type="submit"
               class="btn btn-primary btn-lg form-submit-btn"
@@ -1456,6 +1476,8 @@
         const form = document.querySelector(".estimate-form");
         if (!form) return;
         const btn = form.querySelector(".form-submit-btn");
+        const tcpaConsent = form.querySelector("#tcpa-consent");
+        const tcpaError = form.querySelector("#tcpa-error");
         const fileSizeLimit = 25 * 1024 * 1024;
         const totalFileSizeLimit = 100 * 1024 * 1024;
         const submitWithFormspreeCaptcha = () => {
@@ -1477,6 +1499,17 @@
             return "Upload up to 10 photos, 100 MB total.";
           }
           return "";
+        };
+        const showTcpaError = () => {
+          if (!tcpaConsent || !tcpaError) return;
+          tcpaError.style.display = "block";
+          tcpaConsent.scrollIntoView({ behavior: "smooth", block: "center" });
+          tcpaConsent.focus({ preventScroll: true });
+        };
+        const hideTcpaError = () => {
+          if (tcpaError) {
+            tcpaError.style.display = "none";
+          }
         };
         const readFormspreeError = async (res) => {
           try {
@@ -1513,8 +1546,24 @@
           errEl.textContent = message;
         };
 
+        if (tcpaConsent) {
+          tcpaConsent.addEventListener("change", () => {
+            if (tcpaConsent.checked) hideTcpaError();
+          });
+          tcpaConsent.addEventListener("invalid", (event) => {
+            event.preventDefault();
+            showTcpaError();
+          });
+        }
+
         form.addEventListener("submit", async function (e) {
           e.preventDefault();
+
+          if (tcpaConsent && !tcpaConsent.checked) {
+            showTcpaError();
+            return;
+          }
+          hideTcpaError();
 
           const fileError = selectedFileError();
           if (fileError) {
