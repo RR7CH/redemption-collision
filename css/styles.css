@@ -2776,6 +2776,35 @@ a:hover {
   transform: translateY(-1px);
 }
 
+.sms-photo-btn {
+  display: none;
+  background: #1244c8;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  max-width: 320px;
+  text-align: center;
+}
+
+.sms-response-note {
+  display: none;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 6px;
+}
+
+@media (max-width: 767px) {
+  .sms-photo-btn {
+    display: block;
+  }
+
+  .sms-response-note {
+    display: block;
+  }
+}
+
 /* =========================================
    PHOTO UPLOAD
    ========================================= */
