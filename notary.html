@@ -27,6 +27,7 @@
       content="https://redemptioncollision.com/images/og-image.jpg"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -38,10 +39,7 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": [
-          "LocalBusiness",
-          "AutoRepair"
-        ],
+        "@type": ["LocalBusiness", "AutoRepair"],
         "name": "Redemption Collision Center",
         "url": "https://redemptioncollision.com",
         "telephone": "+13464715322",
@@ -97,6 +95,19 @@
         "description": "Notary services in Humble, TX for vehicle-related documents, title transfers, bills of sale, lien releases, and general notary needs."
       }
     </script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-MM75F74S8W"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-MM75F74S8W");
+    </script>
   </head>
   <body>
     <div id="page-video-bg" aria-hidden="true">
@@ -132,7 +143,9 @@
         <nav class="main-nav" aria-label="Main navigation">
           <a href="index.html">Home</a>
           <div class="nav-dropdown">
-            <a href="services.html" class="nav-dropdown-trigger active">Services <span class="caret">&#9660;</span></a>
+            <a href="services.html" class="nav-dropdown-trigger active"
+              >Services <span class="caret">&#9660;</span></a
+            >
             <div class="nav-dropdown-menu">
               <a href="collision-repair.html">Collision Repair</a>
               <a href="auto-body-paint.html">Auto Body &amp; Paint</a>
@@ -524,7 +537,16 @@
             <button
               id="Anywhere_button_iframe"
               class="anywhere-book-now-button booking-button"
-              style="background-color: #000; color: #fff; border: none; padding: 12px 18px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer"
+              style="
+                background-color: #000;
+                color: #fff;
+                border: none;
+                padding: 12px 18px;
+                font-size: 14px;
+                font-weight: 600;
+                border-radius: 6px;
+                cursor: pointer;
+              "
               data-booking-url="https://redemptioncollision.setmore.com"
               data-new-tab="false"
               type="button"
@@ -588,18 +610,20 @@
     </footer>
 
     <script src="js/main.js"></script>
-  <!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6a3af0abad14dc1d441d0440/1jrr3o7pu';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
-</body>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+      var Tawk_API = Tawk_API || {},
+        Tawk_LoadStart = new Date();
+      (function () {
+        var s1 = document.createElement("script"),
+          s0 = document.getElementsByTagName("script")[0];
+        s1.async = true;
+        s1.src = "https://embed.tawk.to/6a3af0abad14dc1d441d0440/1jrr3o7pu";
+        s1.charset = "UTF-8";
+        s1.setAttribute("crossorigin", "*");
+        s0.parentNode.insertBefore(s1, s0);
+      })();
+    </script>
+    <!--End of Tawk.to Script-->
+  </body>
 </html>

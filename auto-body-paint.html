@@ -32,6 +32,7 @@
       content="https://redemptioncollision.com/images/og-image.jpg"
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap"
       rel="stylesheet"
@@ -43,10 +44,7 @@
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": [
-          "LocalBusiness",
-          "AutoRepair"
-        ],
+        "@type": ["LocalBusiness", "AutoRepair"],
         "name": "Redemption Collision Center",
         "url": "https://redemptioncollision.com",
         "telephone": "+13464715322",
@@ -102,6 +100,19 @@
         "description": "Auto body repair and paint matching in Humble, TX for dents, scratches, bumper damage, panel repair, and repainting."
       }
     </script>
+    <!-- Google tag (gtag.js) -->
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-MM75F74S8W"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-MM75F74S8W");
+    </script>
   </head>
   <body>
     <!-- Fixed full-page video background -->
@@ -139,7 +150,9 @@
         <nav class="main-nav" aria-label="Main navigation">
           <a href="index.html">Home</a>
           <div class="nav-dropdown">
-            <a href="services.html" class="nav-dropdown-trigger active">Services <span class="caret">&#9660;</span></a>
+            <a href="services.html" class="nav-dropdown-trigger active"
+              >Services <span class="caret">&#9660;</span></a
+            >
             <div class="nav-dropdown-menu">
               <a href="collision-repair.html">Collision Repair</a>
               <a href="auto-body-paint.html">Auto Body &amp; Paint</a>
@@ -171,15 +184,8 @@
       </div>
     </header>
 
-    <!-- Hero spacer — video shows through -->
-    <section
-      class="hero hero-cinematic"
-      role="banner"
-      aria-label="Auto Body & Paint Humble TX"
-    ></section>
-
     <!-- Main Content -->
-    <section class="services-section" id="main-content">
+    <section class="services-section service-page-main" id="main-content">
       <div class="container">
         <div class="section-header">
           <h1>
@@ -395,9 +401,10 @@
               >
                 <div class="faq-answer-inner">
                   <p>
-                    Yes. We offer a lifetime warranty on all paint and workmanship.
-                    If you ever have an issue with a repair we completed, bring it back
-                    and we'll make it right at no charge.
+                    Yes. We offer a lifetime warranty on all paint and
+                    workmanship. If you ever have an issue with a repair we
+                    completed, bring it back and we'll make it right at no
+                    charge.
                   </p>
                 </div>
               </div>
@@ -571,7 +578,16 @@
             <button
               id="Anywhere_button_iframe"
               class="anywhere-book-now-button booking-button"
-              style="background-color: #000; color: #fff; border: none; padding: 12px 18px; font-size: 14px; font-weight: 600; border-radius: 6px; cursor: pointer"
+              style="
+                background-color: #000;
+                color: #fff;
+                border: none;
+                padding: 12px 18px;
+                font-size: 14px;
+                font-weight: 600;
+                border-radius: 6px;
+                cursor: pointer;
+              "
               data-booking-url="https://redemptioncollision.setmore.com"
               data-new-tab="false"
               type="button"

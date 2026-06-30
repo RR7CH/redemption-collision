@@ -9,7 +9,7 @@
       "headers": [
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://tawk.to https://*.tawk.to https://assets.setmore.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.setmore.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' https://formspree.io https://tawk.to https://*.tawk.to wss://*.tawk.to https://redemptioncollision.setmore.com https://*.setmore.com; frame-src https://www.google.com https://tawk.to https://*.tawk.to https://redemptioncollision.setmore.com https://*.setmore.com; form-action https://formspree.io; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://tawk.to https://*.tawk.to https://assets.setmore.com https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://assets.setmore.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; media-src 'self'; connect-src 'self' https://formspree.io https://tawk.to https://*.tawk.to wss://*.tawk.to https://redemptioncollision.setmore.com https://*.setmore.com https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com; frame-src https://www.google.com https://tawk.to https://*.tawk.to https://redemptioncollision.setmore.com https://*.setmore.com https://www.googletagmanager.com; form-action https://formspree.io; base-uri 'self'; object-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
         },
         {
           "key": "X-Frame-Options",
